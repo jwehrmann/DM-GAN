@@ -369,7 +369,7 @@ class Memory(nn.Module):
         if self.mask is not None:
             # batch_size x sourceL --> batch_size*queryL x sourceL
             mask = self.mask.repeat(queryL, 1)
-            weight.data.masked_fill_(mask.data, -float('inf'))
+            weight.data.masked_fill_(mask.data.bool(), -float('inf'))
         weight = torch.nn.functional.softmax(weight, dim=1)
 
         # --> batch x queryL x sourceL
