@@ -322,17 +322,23 @@ class condGANTrainer(object):
                     print('Epoch [{}/{}] Step [{}/{}]'.format(epoch, self.max_epoch, step,
                                                               self.num_batches) + ' ' + D_logs + ' ' + G_logs)
                 # save images
-                if gen_iterations % 500 == 0:
+                if gen_iterations % 1000 == 0:
                     backup_para = copy_G_params(netG)
                     load_params(netG, avg_param_G)
-                    self.save_img_results(netG, fixed_noise, sent_emb, words_embs, mask, image_encoder,
-                                         captions, cap_lens, epoch, imgs[-1], name='average')
+                    self.save_img_results(
+                        netG, fixed_noise, sent_emb, 
+                        words_embs, mask, image_encoder,
+                        captions, cap_lens, epoch, imgs[-1],
+                        name='average'
+                    )
                     load_params(netG, backup_para)
                     #
-                    self.save_img_results(netG, fixed_noise, sent_emb,
-                                          words_embs, mask, image_encoder,
-                                          captions, cap_lens,
-                                          epoch, name='current')
+                    self.save_img_results(
+                        netG, fixed_noise, sent_emb,
+                        words_embs, mask, image_encoder,
+                        captions, cap_lens, epoch,  imgs[-1],
+                        name='current'
+                    )
                 # if gen_iterations % 1000 == 0:
                 #    time.sleep(30)
                 # if gen_iterations % 10000 == 0:
